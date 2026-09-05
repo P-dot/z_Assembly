@@ -1,0 +1,33 @@
+# Run from Git Bash.
+# The ZIP should be in your Windows Downloads folder.
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+# Confirm repository and remote.
+pwd
+git remote -v
+git branch --show-current
+
+# Install/update the Lab 01 package directly into the repository root.
+unzip -o "$HOME/Downloads/z_Assembly_lab01_close.zip"
+
+# Verify the complete lab structure, including all evidence screenshots.
+find labs/01-demo1-r15-return-code -maxdepth 3 -type f | sort
+
+# Text-level security check for IPv4/MAC patterns.
+# Raster screenshots were also visually reviewed before packaging.
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" labs/01-demo1-r15-return-code --exclude='*.png' || true
+
+# Stage the lab and inspect exactly what will be committed.
+git add README.md labs/01-demo1-r15-return-code
+git status --short
+git diff --cached --stat
+git diff --cached -- README.md labs/01-demo1-r15-return-code/README.md labs/01-demo1-r15-return-code/jcl/DEMO1.jcl
+
+# Commit and push.
+git commit -m "Add Lab 01 z/Architecture Assembler DEMO1"
+git push origin main
+
+# Final verification.
+git status
+git log -1 --oneline
