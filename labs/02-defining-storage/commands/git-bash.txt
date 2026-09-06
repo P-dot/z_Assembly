@@ -1,0 +1,43 @@
+# Run from Git Bash
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+# Confirm repository and current branch
+pwd
+git status
+git branch --show-current
+git remote -v
+
+# Install the Lab 02 package downloaded to Downloads
+unzip -o "$HOME/Downloads/z_Assembly_lab02_close.zip" -d .
+
+# Confirm the complete lab, including PNG evidence
+find labs/02-defining-storage -maxdepth 3 -type f | sort
+
+# Text-file security scan (screenshots are visually reviewed separately)
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" \
+  README.md labs/02-defining-storage --exclude='*.png' || true
+
+# Stage the updated repository index and the complete lab
+git add README.md labs/02-defining-storage
+
+# Review exactly what will be committed
+git status --short
+git diff --cached --stat
+git diff --cached -- \
+  README.md \
+  labs/02-defining-storage/README.md \
+  labs/02-defining-storage/jcl/LAB001.jcl \
+  labs/02-defining-storage/jcl/LAB002.jcl \
+  labs/02-defining-storage/docs/results.md \
+  labs/02-defining-storage/docs/technical-notes.md \
+  labs/02-defining-storage/docs/evidence-index.md \
+  labs/02-defining-storage/docs/security-review.md
+
+# Commit and publish
+git commit -m "Add Lab 02 defining storage"
+git push origin main
+
+# Final verification
+git status
+git log -2 --oneline

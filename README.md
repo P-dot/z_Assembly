@@ -9,6 +9,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 | Lab | Topic | Status |
 |---|---|---|
 | [Lab 01](labs/01-demo1-r15-return-code/) | DEMO1 — assemble, link, execute, and validate the R15 return code | ✅ Complete |
+| [Lab 02](labs/02-defining-storage/) | Defining storage — signed binary integers, EBCDIC character constants, hexadecimal/bit strings, lengths, duplication, and alignment | ✅ Complete |
 
 ## Environment
 
@@ -17,7 +18,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 - TSO/ISPF
 - SDSF
 - High Level Assembler
-- Standard `ASMACLG` cataloged procedure
+- Standard `ASMAC` and `ASMACLG` cataloged procedures
 
 ## Repository approach
 
@@ -32,4 +33,3 @@ Each completed lab contains:
 - evidence index
 - security/publication review
 - Git Bash installation and push commands
-
