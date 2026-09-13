@@ -10,6 +10,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 |---|---|---|
 | [Lab 01](labs/01-demo1-r15-return-code/) | DEMO1 — assemble, link, execute, and validate the R15 return code | ✅ Complete |
 | [Lab 02](labs/02-defining-storage/) | Defining storage — signed binary integers, EBCDIC character constants, hexadecimal/bit strings, lengths, duplication, and alignment | ✅ Complete |
+| [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — Part 1: execution harness + LAB101 original/long-displacement/relative LOAD validation | 🟡 Part 1 complete / Lab in progress |
 
 ## Environment
 
@@ -24,12 +25,13 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 
 The exercises are based on z/Architecture Assembler concepts and are adapted to the available local z/OS environment. IBM course-specific datasets, credentials, solution libraries, and custom lab procedures are not required.
 
-Each completed lab contains:
+Each completed lab or published lab milestone contains:
 
 - reproducible JCL/source
-- technical documentation
+- technical theory and experiment design
+- expected-versus-observed validation
 - execution results
 - screenshots from ISPF/SDSF
-- evidence index
+- evidence index and integrity manifest
 - security/publication review
-- Git Bash installation and push commands
+- Git Bash installation and publication commands

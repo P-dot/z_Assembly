@@ -1,0 +1,14 @@
+433927146fe5bfe9d5da9251ce1cad339f239381d648b37c87178191d560b904  lab101/01-lab101-source-header-amode-rmode-addressability.png
+e617ef2a7a654be083aa90e39745b03b2a3614a5ca1ee293c68e10c91f542ec2  lab101/02-lab101-source-load-families-and-sysudump.png
+befb08faf3b9562acb5eeb81551064b42a853ac4481875d85611b0cc766b1028  lab101/03-lab101-s0c1-and-register-results.png
+1ac9f599e0620945471e31ae3a6b9a1ef17200f7ef2054f0e48f3bab01d437c1  lab101/04-lab101-source-object-literals-addressing.png
+85237d4091e73b57a4cfaee0817ca5d6e524ca4d3fb8d1e7081f2341f384942d  lab101/05-lab101-using-map-register-cross-reference.png
+826b8912faee41f6ecb6f1cb921e600439c9acc52a4701664d5c8436001e974b  lab101/06-lab101-hlasm-return-code-000.png
+189d604a03efcc23adf707acf030b7d971e88da5858e78d0265c7e84d309318d  lab101/07-lab101-binder-module-map-rmode-any.png
+a161c1d04e9f36f20894e7ef7b8edf1ce6785a868e133dc31fa111f6cdd1e3d7  lab101/08-lab101-save-module-amode31-rmode-any.png
+355368792cccfab859c8dc541c46faf65d73e6c670fee0de56334094aad944ba  lab101/09-lab101-binder-entry-point-rc0.png
+0a87285989c7a3eec486ef3359f64594240bd0c9f755cc9f8fad522906e5ffc6  phase0-harness/01-harn03-source-and-expected-results.png
+d10b0c8b94bd39fc4b6e452e9099244eaffa01d77c51613339a7e7b490c7a5ed  phase0-harness/02-harn03-s0c1-and-registers.png
+e80bf4ce08002088662fb940685092320b3148603d15c87236c836190e4512ab  phase0-harness/03-harn03-source-object-listing.png
+9389e20ddd0d3fd961867d4a3b5b6725df79f57ba5114d1ea97d7f34c173b9ab  phase0-harness/04-harn03-using-map-and-register-cross-reference.png
+71a92067df2ea26bd53c5591c62e8c207fddf053da0df0a0245b2820a7a5aedd  phase0-harness/05-harn03-binder-baseline-rmode24.png

@@ -1,0 +1,34 @@
+lab:
+  id: "03"
+  title: "LOAD, Addressing and Register Width"
+  repository_path: "labs/03-load-addressing-register-width"
+  overall_status: "in_progress"
+  published_milestone: "part_1_complete"
+  part_1_scope:
+    - "Phase 0 - execution harness validation"
+    - "LAB101 - low-half LOAD instruction families"
+  remaining_scope:
+    - "LAB102 - no-base-register, relative and immediate LOAD"
+    - "LAB103 - 64-bit LOAD variants and sign extension"
+architecture_v2:
+  primary_domain: "Application and Data Engineering"
+  capability: "z/Architecture register loading and addressability"
+  lifecycle:
+    - "Baseline"
+    - "Operate"
+    - "Observe"
+  maturity: "M2 Operational (Part 1)"
+platform:
+  os: "IBM z/OS V1R11 (ADCD laboratory environment)"
+  runtime: "zPDT"
+  interfaces:
+    - "TSO/ISPF"
+    - "SDSF"
+  toolchain:
+    - "IBM High Level Assembler"
+    - "Binder"
+    - "ASMACLG"
+validation:
+  assembly_rc: "0000"
+  binder_rc: "0000"
+  execution_result: "S0C1 intentional"
