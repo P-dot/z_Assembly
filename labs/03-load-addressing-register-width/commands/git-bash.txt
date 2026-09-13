@@ -1,0 +1,58 @@
+# Lab 03 Part 1 publication workflow
+# Run from Git Bash.
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+# Start from the validated published branch.
+git switch main
+git pull --ff-only origin main
+
+# Architecture V2 laboratory branches are short-lived.
+git switch -c lab/03-load-addressing-part1
+
+# Install the ZIP downloaded to Windows Downloads.
+unzip -o "$HOME/Downloads/z_Assembly_lab03_part1_close.zip" -d .
+
+# Confirm the package.
+find labs/03-load-addressing-register-width -maxdepth 4 -type f | sort
+
+# Confirm evidence counts and integrity manifest.
+find labs/03-load-addressing-register-width/evidence -type f -name '*.png' | wc -l
+(
+  cd labs/03-load-addressing-register-width/evidence
+  sha256sum -c SHA256SUMS.txt
+)
+
+# Publication-security scan for text files.
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" \
+  README.md labs/03-load-addressing-register-width \
+  --exclude='*.png' || true
+
+# Stage only this milestone and the root index.
+git add README.md labs/03-load-addressing-register-width
+
+# Review before commit.
+git status --short
+git diff --cached --stat
+git diff --cached -- \
+  README.md \
+  labs/03-load-addressing-register-width/README.md \
+  labs/03-load-addressing-register-width/lab-metadata.yaml \
+  labs/03-load-addressing-register-width/jcl/HARN03.jcl \
+  labs/03-load-addressing-register-width/jcl/LAB101.jcl \
+  labs/03-load-addressing-register-width/docs
+
+# Commit and publish the short-lived lab branch.
+git commit -m "Add Lab 03 Part 1 LOAD addressing validation"
+git push -u origin lab/03-load-addressing-part1
+
+# Open the reviewable PR using the included professional PR description.
+gh pr create \
+  --base main \
+  --head lab/03-load-addressing-part1 \
+  --title "Add Lab 03 Part 1 LOAD addressing validation" \
+  --body-file labs/03-load-addressing-register-width/docs/pr-body.md
+
+# Inspect the PR and working tree.
+gh pr view --web
+git status
