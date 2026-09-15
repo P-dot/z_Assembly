@@ -1,0 +1,12 @@
+21fdef803b00d4c5d0ad87522db29e5f919365f96cacec223c44098ac109cff2  lab102-compatibility/01-lab102-lfi-unsupported-asma057e.png
+c89bf48e36d639669be9b59c8a07601338d22c002895ca484a56ce7cd79ea541  lab102-compatibility/02-lab102-amode31-rmode-any-before-iilf-fix.png
+c78fef4fab49907b269857063ccdf0c99acbfccb358cc3570791c4f91816708d  lab102-final/01-lab102-source-header-no-base-register.png
+e3630b5707bd43ecb60c7e2c2f1cca160db1ca9779760c7d9ca50f5633f4647e  lab102-final/02-lab102-final-source-iilf-lhi.png
+f88efc61cfea4e95c11eadc7529c1eeeb9e4275cb50eb51df8ee324c7070c3d7  lab102-final/03-lab102-final-registers-and-intentional-s0c1.png
+a3a65359954d72fec39dc0ab9d02d143831cf84107469066a1b3de73ea0b12cf  lab102-final/04-lab102-final-hlasm-rc000.png
+b72324ff0419731a2b2257d27a8fe407346d09e351aff4289c93926a943cafde  lab102-final/05-lab102-final-binder-entry-rc0.png
+fdcf546057b4320cee94fecb2f960107316cace71163ad795f9272f478496aae  lab102-negative/01-l102neg-source-header-and-hypothesis.png
+7bfdd2647d8262a9d1ad0aebb2b9582de38f85a688ff31ff63d84062be32e054  lab102-negative/02-l102neg-base-dependent-loads.png
+0891a14a985c5e0291dc8eeed462b7bc4ed80da3b989428ce80872ef8c913bbe  lab102-negative/03-l102neg-asma307e-no-active-using.png
+369ee9c21fa40c636387ffd409ebeaecc33bd5827d230cfe35571082587e5a57  lab102-negative/04-l102neg-assembler-rc008.png
+41e7ba65989df856a7b1436b73e4e993703e151ecdc503ba1466ef6ea944cc47  lab102-negative/05-l102neg-asmaclg-continued-to-runtime-s0c1.png

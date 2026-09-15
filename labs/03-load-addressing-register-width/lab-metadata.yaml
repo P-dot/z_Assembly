@@ -3,12 +3,14 @@ lab:
   title: "LOAD, Addressing and Register Width"
   repository_path: "labs/03-load-addressing-register-width"
   overall_status: "in_progress"
-  published_milestone: "part_1_complete"
-  part_1_scope:
+  published_milestone: "part_2_complete"
+  completed_scope:
     - "Phase 0 - execution harness validation"
     - "LAB101 - low-half LOAD instruction families"
+    - "LAB102 - no-base-register relative/immediate LOAD"
+    - "LAB102 negative addressability control"
+    - "LAB102 HLASM compatibility adaptation LFI to IILF"
   remaining_scope:
-    - "LAB102 - no-base-register, relative and immediate LOAD"
     - "LAB103 - 64-bit LOAD variants and sign extension"
 architecture_v2:
   primary_domain: "Application and Data Engineering"
@@ -17,7 +19,8 @@ architecture_v2:
     - "Baseline"
     - "Operate"
     - "Observe"
-  maturity: "M2 Operational (Part 1)"
+    - "Diagnose"
+  maturity: "M2 Operational (Parts 1-2)"
 platform:
   os: "IBM z/OS V1R11 (ADCD laboratory environment)"
   runtime: "zPDT"
@@ -29,6 +32,11 @@ platform:
     - "Binder"
     - "ASMACLG"
 validation:
-  assembly_rc: "0000"
-  binder_rc: "0000"
-  execution_result: "S0C1 intentional"
+  lab102_negative_assembly_rc: "0008"
+  lab102_final_assembly_rc: "0000"
+  lab102_final_binder_rc: "0000"
+  lab102_final_execution_result: "S0C1 intentional"
+compatibility:
+  course_mnemonic: "LFI"
+  local_result: "ASMA057E undefined operation code"
+  local_adaptation: "IILF"

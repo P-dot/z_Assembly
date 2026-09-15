@@ -10,7 +10,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 |---|---|---|
 | [Lab 01](labs/01-demo1-r15-return-code/) | DEMO1 — assemble, link, execute, and validate the R15 return code | ✅ Complete |
 | [Lab 02](labs/02-defining-storage/) | Defining storage — signed binary integers, EBCDIC character constants, hexadecimal/bit strings, lengths, duplication, and alignment | ✅ Complete |
-| [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — Part 1: execution harness + LAB101 original/long-displacement/relative LOAD validation | 🟡 Part 1 complete / Lab in progress |
+| [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — Part 1 LAB101 + Part 2 LAB102/no-base addressing | 🟡 Parts 1–2 complete / LAB103 pending |
 
 ## Environment
 
@@ -30,6 +30,7 @@ Each completed lab or published lab milestone contains:
 - reproducible JCL/source
 - technical theory and experiment design
 - expected-versus-observed validation
+- negative tests when they add engineering value
 - execution results
 - screenshots from ISPF/SDSF
 - evidence index and integrity manifest
