@@ -1,32 +1,26 @@
 # Lab 03 — LOAD, Addressing and Register Width
 
-> **Published milestone:** Part 1 complete  
+> **Published milestone:** Part 2 complete  
 > **Overall Lab 03 status:** In progress  
-> **Completed scope:** Phase 0 (`HARN03`) + `LAB101`  
-> **Remaining scope:** `LAB102` + `LAB103`
+> **Completed scope:** Phase 0 + LAB101 + LAB102 negative/control/corrected  
+> **Remaining scope:** LAB103 — 64-bit LOAD variants and sign extension
 
 ## Purpose
 
-This laboratory turns the IBM z/Architecture LOAD exercise into a reproducible
-engineering experiment on a local z/OS V1R11 ADCD system running under zPDT.
+This lab studies LOAD not merely as data movement, but as an addressability and
+register-width problem on a real z/OS V1R11 ADCD system.
 
-Part 1 establishes two foundations:
-
-1. a controlled execution/diagnostic harness that can expose GPR state after an
-   intentional S0C1; and
-2. validated execution of original, long-displacement and relative-addressing
-   LOAD instruction families that operate on the low 32 bits of general-purpose
-   registers.
-
-The goal is not only to assemble valid instructions. The lab connects:
+The engineering flow is:
 
 ```text
-source
-  -> HLASM object code
-  -> addressability model
-  -> Binder attributes
-  -> runtime GPR contents
-  -> diagnostic evidence
+theory
+  -> hypothesis
+  -> implementation
+  -> negative control
+  -> HLASM/Binder/runtime observation
+  -> evidence
+  -> diagnosis
+  -> corrected implementation
 ```
 
 ## Architecture V2 classification
@@ -35,288 +29,236 @@ source
 |---|---|
 | Primary domain | Application and Data Engineering |
 | Capability | z/Architecture register loading and addressability |
-| Lifecycle | Baseline -> Operate -> Observe |
-| Part 1 maturity | M2 Operational |
+| Lifecycle | Baseline -> Operate -> Observe -> Diagnose |
+| Current maturity | M2 Operational |
 | Platform | z/OS V1R11 / ADCD / zPDT |
 | Toolchain | ASMACLG -> HLASM -> Binder -> execution -> SDSF |
-| Runtime diagnostic | Controlled S0C1 with `SYSUDUMP` |
 | Overall Lab 03 | In progress |
 
-## Part 1 scope
+## Milestones
 
 ```text
 Lab 03
 |
-+-- Phase 0 - HARN03
-|     |
-|     +-- validate ASMACLG
-|     +-- validate controlled S0C1
-|     +-- validate SYSUDUMP/GPR evidence
-|     +-- establish Binder baseline
++-- Phase 0 - execution harness validation             COMPLETE
 |
-+-- LAB101
-      |
-      +-- L / LH / LR
-      +-- LY / LHY
-      +-- LRL / LHRL
-      +-- literal pool inspection
-      +-- USING Map
-      +-- GPR verification
-      +-- explicit AMODE 31 / RMODE ANY
++-- LAB101 - original / long / relative LOAD          COMPLETE
+|
++-- LAB102 - no-base-register design                  COMPLETE
+|     |
+|     +-- negative addressability control
+|     +-- ASMA307E diagnostics
+|     +-- standard ASMACLG RC=8 behavior discovery
+|     +-- relative-addressing correction
+|     +-- immediate-operand correction
+|     +-- LFI compatibility discovery
+|     +-- IILF adaptation for local HLASM
+|
++-- LAB103 - 64-bit LOAD and sign extension            PENDING
 ```
 
-`LAB102` and `LAB103` are intentionally not claimed as complete in this
-milestone.
+## Part 1
+
+Part 1 remains documented through:
+
+- `docs/theory-part1.md`
+- `docs/experiment-plan-part1.md`
+- `docs/instruction-matrix-part1.md`
+- `docs/results-part1.md`
+- `docs/troubleshooting-part1.md`
+- `docs/evidence-index-part1.md`
+
+It validated:
+
+- the local ASMACLG/SYSUDUMP harness;
+- `L`, `LH`, `LR`;
+- `LY`, `LHY`;
+- `LRL`, `LHRL`;
+- literal pools;
+- USING Map and GPR cross-reference;
+- explicit `AMODE 31` / `RMODE ANY`;
+- controlled S0C1 diagnostics.
+
+## Part 2 — LAB102
+
+### Objective
+
+LAB102 removes base-register addressability and proves which instruction forms
+can still be assembled and executed.
+
+The central transformation is:
+
+```text
+base-dependent storage reference      no-base equivalent
+--------------------------------      ------------------
+L   2,=F'170'                         LRL  2,=F'170'
+LH  3,=H'4095'                        LHRL 3,=H'4095'
+LR  4,3                               LR   4,3
+LY  5,=F'187'                         IILF 5,187
+LHY 6,=H'2048'                        LHI  6,2048
+```
+
+`IILF` is used in the local environment because the course mnemonic `LFI`
+was not recognized by this HLASM level.
 
 ---
 
-## Phase 0 — Execution Harness Validation
+## Negative control — L102NEG
 
-Source: [`jcl/HARN03.jcl`](jcl/HARN03.jcl)
-
-The harness was created before reproducing `LAB101` in order to validate the
-local ADCD execution path rather than assuming that IBM's hosted training
-infrastructure and procedures behave identically to this system.
-
-The job uses the standard `ASMACLG` procedure:
-
-```text
-C -> assemble
-L -> bind
-G -> execute
-```
-
-The program loads known values into R2, R3 and R4, then intentionally reaches:
+The experiment deliberately removes:
 
 ```asm
-         DC    H'0'
+         LARL  12,LAB102N
+         USING LAB102N,12
 ```
 
-`X'0000'` is data, not a valid executable opcode. Reaching it produces the
-expected operation exception / S0C1. `SYSUDUMP` is attached to the `G` step so
-the runtime register state is observable.
+while retaining storage-referencing instructions that require addressability.
 
-### Harness result
+HLASM produced four expected addressability errors:
+
+```text
+ASMA307E No active USING for operand =F'170'
+ASMA307E No active USING for operand =H'4095'
+ASMA307E No active USING for operand =F'187'
+ASMA307E No active USING for operand =H'2048'
+```
+
+`LR 4,3` still generated object code because it is register-to-register and
+does not need a storage effective address.
+
+HLASM completed with:
+
+```text
+Return Code 008
+```
+
+### Unexpected but important local behavior
+
+The original hypothesis expected the Binder and GO phases not to run after
+assembly RC 8.
+
+On this system, the standard `ASMACLG` procedure continued through Binder and
+execution. The incomplete object contained zero-filled instruction fields for
+the statements HLASM could not resolve, and execution then reached invalid
+operation bytes and produced S0C1.
+
+This is recorded as a platform/toolchain discovery, not hidden as noise.
+
+---
+
+## Compatibility discovery — LFI
+
+The first corrected LAB102 attempt followed the newer course mnemonic:
+
+```asm
+         LFI   5,187
+```
+
+The local HLASM returned:
+
+```text
+ASMA057E Undefined operation code - LFI
+```
+
+This established a real compatibility difference between the modern training
+material and the older ADCD/HLASM environment.
+
+For this lab the compatible low-fullword immediate operation is written as:
+
+```asm
+         IILF  5,187
+```
+
+The corrected run assembled cleanly and produced the required low-order
+fullword value in R5.
+
+---
+
+## Final corrected LAB102
+
+Final source:
+
+```asm
+LAB102   CSECT
+LAB102   AMODE 31
+LAB102   RMODE ANY
+
+         LRL   2,=F'170'
+         LHRL  3,=H'4095'
+         LR    4,3
+         IILF  5,187
+         LHI   6,2048
+
+         DC    H'0'
+         END   LAB102
+```
+
+There is intentionally no `LARL`/`USING` base-register setup.
+
+### Final result
 
 | Check | Expected | Observed |
 |---|---|---|
 | HLASM | RC 0000 | RC 0000 |
 | Binder | RC 0000 | RC 0000 |
-| Execution | S0C1 | S0C1 |
+| Entry point | LAB102 | LAB102 |
+| AMODE | 31 | 31 |
 | R2 low | `000000AA` | `000000AA` |
 | R3 low | `00000FFF` | `00000FFF` |
 | R4 low | `00000FFF` | `00000FFF` |
+| R5 low | `000000BB` | `000000BB` |
+| R6 low | `00000800` | `00000800` |
+| Execution | controlled S0C1 | controlled S0C1 |
 
-The initial Binder baseline also exposed a useful environmental default:
-without explicit source attributes, the module was built with legacy
-24-bit residency/addressing attributes. That observation drove the explicit
-`AMODE 31` / `RMODE ANY` declarations in `LAB101`.
-
----
-
-## LAB101 — Low-half LOAD instruction families
-
-Source: [`jcl/LAB101.jcl`](jcl/LAB101.jcl)
-
-### Addressability prolog
-
-```asm
-LAB101   CSECT
-LAB101   AMODE 31
-LAB101   RMODE ANY
-
-         LARL  12,LAB101
-         USING LAB101,12
-```
-
-`LARL` executes at runtime and loads the CSECT address into R12.
-
-`USING` is an assembler instruction. It does not modify R12; it tells HLASM
-that R12 is available as an addressability base for the declared range.
-
-The runtime dump confirmed that R12 contained the same address reported for
-the active load module.
-
-### Instruction families
-
-| Family | Instructions | Addressing model | Result width |
-|---|---|---|---|
-| Original | `L`, `LH` | base + 12-bit unsigned displacement | low 32 bits |
-| Register | `LR` | register to register | low 32 bits |
-| Long displacement | `LY`, `LHY` | base + 20-bit signed displacement | low 32 bits |
-| Relative-long | `LRL`, `LHRL` | instruction-relative | low 32 bits |
-
-### Expected versus observed registers
-
-| GPR | Instruction | Expected low 32 bits | Observed |
-|---|---|---:|---:|
-| R2 | `L 2,=F'170'` | `000000AA` | `000000AA` |
-| R3 | `LH 3,=H'4095'` | `00000FFF` | `00000FFF` |
-| R4 | `LR 4,3` | `00000FFF` | `00000FFF` |
-| R5 | `LY 5,=F'187'` | `000000BB` | `000000BB` |
-| R6 | `LHY 6,=H'2048'` | `00000800` | `00000800` |
-| R7 | `LRL 7,=F'1024000'` | `000FA000` | `000FA000` |
-| R8 | `LHRL 8,=H'255'` | `000000FF` | `000000FF` |
-
-All expected values were observed.
-
----
-
-## Object-code validation
-
-The HLASM Source/Object listing shows the relationship between source,
-instruction format and literal placement.
-
-Examples from the validated run include:
+The final HLASM summary reports:
 
 ```text
-000006  5820 C030      L    2,=F'170'
-00000A  4830 C03C      LH   3,=H'4095'
-00000E  1843           LR   4,3
+No Statements Flagged in this Assembly
+Return Code 000
 ```
 
-For `L`:
+The Binder summary reports return code 0 and entry point `LAB102`.
 
-```text
-58   = opcode
-2    = destination register R2
-C    = base register R12
-030  = displacement X'030'
-```
+The S0C1 in the final run is again deliberate: execution has successfully
+completed the instructions under test and then falls through into `DC H'0'`.
 
-The literal pool contains:
+## Evidence discipline
 
-```text
-000030  000000AA       =F'170'
-```
+The final evidence proves functional correctness and toolchain success.
 
-so the effective address is resolved through:
+The final rerun did not capture a fresh Source/Object screen containing the
+`IILF` bytes, so this milestone deliberately does **not** claim a byte-for-byte
+object-code proof for `IILF`. Its behavior is instead validated by:
 
-```text
-R12 + X'030' -> =F'170'
-```
+- clean HLASM RC 000;
+- R5 low-order value `000000BB`;
+- successful Binder RC 0;
+- controlled termination after the tested instructions.
 
-The listing also shows that `LY` and `LHY` are six-byte instructions using the
-long-displacement formats.
+That distinction is intentional and keeps evidence claims auditable.
 
-### Relative-long verification
+## Part 2 result
 
-The relative instructions provide a particularly strong validation because the
-encoded relative displacement can be reconciled with the listing locations.
+**PASS — LAB102 is complete and publishable.**
 
-For `LRL`:
+Lab 03 itself remains open until LAB103 validates full 64-bit LOAD variants and
+sign extension.
 
-```text
-instruction location = X'1C'
-literal location     = X'38'
-byte distance        = X'1C' = 28 decimal
-halfword distance    = 14 = X'0000000E'
-```
+## Part 2 documentation
 
-The listing encodes the relative field as `0000000E`.
-
-For `LHRL`:
-
-```text
-instruction location = X'22'
-literal location     = X'40'
-byte distance        = X'1E' = 30 decimal
-halfword distance    = 15 = X'0000000F'
-```
-
-The listing encodes `0000000F`.
-
-This demonstrates instruction-relative address formation rather than simply
-stating that the instructions are relative.
-
----
-
-## Literal pool
-
-The validated listing contains:
-
-```text
-000030  000000AA   =F'170'
-000034  000000BB   =F'187'
-000038  000FA000   =F'1024000'
-00003C  0FFF       =H'4095'
-00003E  0800       =H'2048'
-000040  00FF       =H'255'
-```
-
-This also connects Lab 03 with the alignment and representation concepts
-validated previously in Lab 02.
-
----
-
-## Binder validation
-
-Unlike the Phase 0 harness baseline, `LAB101` explicitly declares:
-
-```asm
-LAB101   AMODE 31
-LAB101   RMODE ANY
-```
-
-The Binder evidence confirms:
-
-```text
-AMODE = 31
-RMODE = ANY
-ENTRY = LAB101
-Binder RC = 0
-```
-
-This removes an unnecessary dependency on legacy defaults.
-
----
-
-## Controlled S0C1
-
-The S0C1 remains a deliberate diagnostic mechanism, not an unexpected failure.
-
-Part 1 is successful only when all of the following are true:
-
-```text
-HLASM RC 0000
-Binder RC 0000
-expected GPR values observed
-intentional S0C1 observed
-diagnostic evidence captured
-```
-
-All criteria were met.
-
----
-
-## Part 1 result
-
-**PASS — Part 1 is complete and publishable.**
-
-The complete Lab 03 is not yet closed. The next milestone will extend the same
-lab with:
-
-```text
-LAB102 -> no base register / relative + immediate LOAD
-LAB103 -> full 64-bit LOAD variants and sign extension
-```
-
-## Documentation
-
-- [`docs/theory-part1.md`](docs/theory-part1.md)
-- [`docs/experiment-plan-part1.md`](docs/experiment-plan-part1.md)
-- [`docs/instruction-matrix-part1.md`](docs/instruction-matrix-part1.md)
-- [`docs/results-part1.md`](docs/results-part1.md)
-- [`docs/troubleshooting-part1.md`](docs/troubleshooting-part1.md)
-- [`docs/evidence-index-part1.md`](docs/evidence-index-part1.md)
-- [`docs/security-review.md`](docs/security-review.md)
+- `docs/theory-part2.md`
+- `docs/experiment-plan-part2.md`
+- `docs/results-part2.md`
+- `docs/troubleshooting-part2.md`
+- `docs/compatibility-lfi-iilf.md`
+- `docs/evidence-index-part2.md`
+- `docs/security-review-part2.md`
 
 ## References
 
-- IBM, *z/Architecture Assembler. Part 2: Machine Instructions*,
-  Exercise 3 — Unit 1: LOAD (2023).
+- IBM, *z/Architecture Assembler. Part 2: Machine Instructions*, Exercise 3.
 - IBM High Level Assembler documentation.
-- IBM z/OS program management / Binder documentation.
+- IBM z/OS Binder / program management documentation.
 
-The IBM course material is referenced as the learning source. IBM course pages,
-solutions and proprietary training files are not reproduced in this repository.
+The IBM course is used as a technical learning source. Course solution files
+and proprietary training assets are not reproduced.
