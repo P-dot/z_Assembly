@@ -1,0 +1,56 @@
+# Lab 03 Part 2 publication workflow
+# Run from Git Bash.
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+git switch main
+git pull --ff-only origin main
+
+git switch -c lab/03-load-addressing-part2
+
+unzip -o "$HOME/Downloads/z_Assembly_lab03_part2_close.zip" -d .
+
+find labs/03-load-addressing-register-width -maxdepth 4 -type f | sort
+
+# Verify Part 2 evidence integrity.
+(
+  cd labs/03-load-addressing-register-width/evidence
+  sha256sum -c SHA256SUMS-part2.txt
+)
+
+# Publication-security text scan.
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" \
+  README.md labs/03-load-addressing-register-width \
+  --exclude='*.png' || true
+
+git add \
+  README.md \
+  labs/03-load-addressing-register-width/README.md \
+  labs/03-load-addressing-register-width/lab-metadata.yaml \
+  labs/03-load-addressing-register-width/jcl/L102NEG.jcl \
+  labs/03-load-addressing-register-width/jcl/LAB102.jcl \
+  labs/03-load-addressing-register-width/docs/theory-part2.md \
+  labs/03-load-addressing-register-width/docs/experiment-plan-part2.md \
+  labs/03-load-addressing-register-width/docs/results-part2.md \
+  labs/03-load-addressing-register-width/docs/troubleshooting-part2.md \
+  labs/03-load-addressing-register-width/docs/compatibility-lfi-iilf.md \
+  labs/03-load-addressing-register-width/docs/evidence-index-part2.md \
+  labs/03-load-addressing-register-width/docs/security-review-part2.md \
+  labs/03-load-addressing-register-width/docs/pr-body-part2.md \
+  labs/03-load-addressing-register-width/evidence
+
+git status --short
+git diff --cached --stat
+
+git commit -m "Add Lab 03 Part 2 no-base LOAD validation"
+git push -u origin lab/03-load-addressing-part2
+
+# GitHub CLI is not installed on this workstation.
+# Open the PR creation page in the default browser instead.
+start "" "https://github.com/P-dot/z_Assembly/compare/main...lab/03-load-addressing-part2?expand=1"
+
+# PR title:
+# Add Lab 03 Part 2 no-base LOAD validation
+#
+# PR body:
+# labs/03-load-addressing-register-width/docs/pr-body-part2.md

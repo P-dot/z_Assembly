@@ -1,0 +1,11 @@
+9ca832979f3ffcd1fae0084d033881907d3f4a7976ad05de20d24296b77712f4  lab103/01-lab103-source-header-addressability.png
+fb9af6d955cd72bddac6eb75f8f59bc5a03d9c503e44229950dba321c37d7a85  lab103/02-lab103-source-load-families-and-data.png
+4b1a4d95bc136cfce4f6ab3941818107de0fd32ae61d494e5810263166c36e61  lab103/03-lab103-asmaclg-assembly-binder-rc0000.png
+b915d48cbfff87295d1819baf4b125ecb3190bdb7f17c3ca1fc4a31d51ce42bd  lab103/04-lab103-registers-r2-r9-and-controlled-s0c1.png
+e58e0500a3e37f436475b2e7e464737d0182afdfc93c70ce3c9f2bbc9246668f  lab103/05-lab103-source-object-base-loads.png
+0bd768d96dbf86e9ac6815a695349489080b83a617b6a7cdc3d07c431c0cb2ff  lab103/06-lab103-source-object-relative-immediate-data.png
+e504fd068e89a9589a327efd2ce87f0eb65d7e513bd6696c84ba7ff504eaeb95  lab103/07-lab103-using-map-gpr-cross-reference-no-errors.png
+a352d42c9b0e97fc925e15b24a32f860f770da27157c090d5e2ab8245141831a  lab103/08-lab103-hlasm-return-code-000.png
+0fee55059d61b6055c39fbd2c9ee33bc75273360b1b8b3ba49bf607d7c5f597e  lab103/09-lab103-binder-module-map-rmode-any.png
+1554424691c4750f09b8db3aac7d09a9093066614b546dd49d04bffe41a593a4  lab103/10-lab103-save-module-amode31-rmode-any.png
+aad23893d64a33435d172de663797b4d8cc008a86b70eb0c9768c0924455aad0  lab103/11-lab103-binder-entry-point-rc0.png

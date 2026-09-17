@@ -1,0 +1,55 @@
+# Final Lab 03 publication workflow
+# Run from Git Bash.
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+git switch main
+git pull --ff-only origin main
+
+git switch -c lab/03-load-addressing-final
+
+unzip -o "$HOME/Downloads/z_Assembly_lab03_final_close.zip" -d .
+
+# Verify files.
+find labs/03-load-addressing-register-width -maxdepth 4 -type f | sort
+
+# Verify Part 3 evidence integrity.
+(
+  cd labs/03-load-addressing-register-width/evidence
+  sha256sum -c SHA256SUMS-part3.txt
+)
+
+# Publication-security scan over text files.
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" \
+  README.md labs/03-load-addressing-register-width \
+  --exclude='*.png' || true
+
+git add \
+  README.md \
+  labs/03-load-addressing-register-width/README.md \
+  labs/03-load-addressing-register-width/lab-metadata.yaml \
+  labs/03-load-addressing-register-width/jcl/LAB103.jcl \
+  labs/03-load-addressing-register-width/docs/theory-part3.md \
+  labs/03-load-addressing-register-width/docs/experiment-plan-part3.md \
+  labs/03-load-addressing-register-width/docs/results-part3.md \
+  labs/03-load-addressing-register-width/docs/instruction-matrix-final.md \
+  labs/03-load-addressing-register-width/docs/final-summary.md \
+  labs/03-load-addressing-register-width/docs/evidence-index-part3.md \
+  labs/03-load-addressing-register-width/docs/security-review-part3.md \
+  labs/03-load-addressing-register-width/docs/pr-body-final.md \
+  labs/03-load-addressing-register-width/evidence
+
+git status --short
+git diff --cached --stat
+
+git commit -m "Complete Lab 03 64-bit LOAD validation"
+git push -u origin lab/03-load-addressing-final
+
+# Open PR creation page.
+start "" "https://github.com/P-dot/z_Assembly/compare/main...lab/03-load-addressing-final?expand=1"
+
+# PR title:
+# Complete Lab 03 64-bit LOAD validation
+#
+# PR body:
+# labs/03-load-addressing-register-width/docs/pr-body-final.md

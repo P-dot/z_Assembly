@@ -10,7 +10,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 |---|---|---|
 | [Lab 01](labs/01-demo1-r15-return-code/) | DEMO1 — assemble, link, execute, and validate the R15 return code | ✅ Complete |
 | [Lab 02](labs/02-defining-storage/) | Defining storage — signed binary integers, EBCDIC character constants, hexadecimal/bit strings, lengths, duplication, and alignment | ✅ Complete |
-| [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — Part 1 LAB101 + Part 2 LAB102/no-base addressing | 🟡 Parts 1–2 complete / LAB103 pending |
+| [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — base/long/relative/immediate addressing and full 64-bit GPR loads | ✅ Complete |
 
 ## Environment
 
