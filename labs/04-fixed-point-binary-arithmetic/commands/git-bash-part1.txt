@@ -1,0 +1,46 @@
+# Lab 04 Part 1 publication workflow
+# Git Bash
+
+cd /c/Carrera_Ciberseguridad/06_Portfolio_GitHub/z_Assembly
+
+git switch main
+git pull --ff-only origin main
+
+git switch -c lab/04-binary-arithmetic-part1
+
+unzip -o "$HOME/Downloads/z_Assembly_lab04_part1_close.zip" -d .
+
+# Verify the package.
+find labs/04-fixed-point-binary-arithmetic -maxdepth 4 -type f | sort
+
+# Verify evidence integrity.
+(
+  cd labs/04-fixed-point-binary-arithmetic/evidence
+  sha256sum -c SHA256SUMS-part1.txt
+)
+
+# Publication-security scan over text files.
+grep -RIE "([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}" \
+  README.md labs/04-fixed-point-binary-arithmetic \
+  --exclude='*.png' || true
+
+# Stage the milestone, including the command file itself.
+git add \
+  README.md \
+  labs/04-fixed-point-binary-arithmetic/
+
+git status --short
+git diff --cached --stat
+git diff --check --cached
+
+git commit -m "Add Lab 04 Part 1 fixed-point arithmetic validation"
+
+git push -u origin lab/04-binary-arithmetic-part1
+
+start "" "https://github.com/P-dot/z_Assembly/compare/main...lab/04-binary-arithmetic-part1?expand=1"
+
+# PR title:
+# Add Lab 04 Part 1 fixed-point ADD/SUBTRACT validation
+#
+# PR body:
+# labs/04-fixed-point-binary-arithmetic/docs/pr-body-part1.md

@@ -11,6 +11,7 @@ The repository focuses on validating Assembler concepts on a real z/OS system ra
 | [Lab 01](labs/01-demo1-r15-return-code/) | DEMO1 — assemble, link, execute, and validate the R15 return code | ✅ Complete |
 | [Lab 02](labs/02-defining-storage/) | Defining storage — signed binary integers, EBCDIC character constants, hexadecimal/bit strings, lengths, duplication, and alignment | ✅ Complete |
 | [Lab 03](labs/03-load-addressing-register-width/) | LOAD, addressing and register width — base/long/relative/immediate addressing and full 64-bit GPR loads | ✅ Complete |
+| [Lab 04](labs/04-fixed-point-binary-arithmetic/) | Fixed-point binary arithmetic — ADD/SUBTRACT, overflow, MULTIPLY/DIVIDE and 64-bit variants | 🟡 Part 1 complete — LAB202/LAB203 pending |
 
 ## Environment
 
