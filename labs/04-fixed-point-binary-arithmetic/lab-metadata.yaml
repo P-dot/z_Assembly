@@ -1,0 +1,65 @@
+lab:
+  id: "04"
+  historical_id: "labs/04-fixed-point-binary-arithmetic"
+  title: "Fixed-Point Binary Arithmetic"
+  overall_status: "in_progress"
+  published_milestone: "part1_lab201_complete"
+
+architecture:
+  domain: "Application and Data Engineering"
+  capability: "z/Architecture fixed-point binary arithmetic"
+  lifecycle:
+    - "Baseline"
+    - "Operate"
+    - "Observe"
+    - "Diagnose"
+    - "Improve"
+  maturity_current: "M2 Operational"
+  maturity_target: "M3 Resilient"
+  integration_level: "I0 Standalone"
+
+platform:
+  os: "IBM z/OS V1R11 ADCD"
+  runtime: "zPDT"
+  interfaces:
+    - "TSO/ISPF"
+    - "SDSF"
+  toolchain:
+    - "HLASM"
+    - "Binder"
+    - "ASMACLG"
+
+completed_scope:
+  - "LAB201 storage-operand ADD/SUBTRACT"
+  - "LAB201 immediate-operand ADD/SUBTRACT"
+  - "IILF local compatibility adaptation"
+  - "two's-complement immediate encoding"
+  - "Source/Object analysis"
+  - "runtime GPR validation"
+
+remaining_scope:
+  - "LAB202 overflow exception"
+  - "LAB202 64-bit correction"
+  - "LAB203 multiply/divide"
+  - "LAB203 64-bit multiply/divide"
+
+validation:
+  assembly_rc: "000"
+  binder_rc: "0"
+  amode: "31"
+  rmode: "ANY"
+  entry_point: "LAB201"
+  execution_result: "S0C1 intentional"
+  csect_length_hex: "32"
+  registers:
+    r2_low: "0000AAAA"
+    r3_low: "00008888"
+    r4_low: "0000AAAA"
+    r5_low: "00008888"
+
+compatibility:
+  unavailable_course_mnemonic: "LFI"
+  local_adaptation: "IILF"
+
+next_capability:
+  - "LAB202 fixed-point overflow diagnosis and 64-bit correction"

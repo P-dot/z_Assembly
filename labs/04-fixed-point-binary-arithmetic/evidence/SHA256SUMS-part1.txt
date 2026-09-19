@@ -1,0 +1,14 @@
+46e130ebe33f43a278edc218806189503499c8aec1e517bd7e83268b210bac9a  lab201/01-lab201-source-header-and-expected-results.png
+110b55a5f22e1e081e5c3eba45d30ed14eef27050a72c511397e5ca54ff00904  lab201/02-lab201-part1-storage-operand-source.png
+e64d9571e5bb24c4574810ca92d331cea9a6700d32368f3e0a1837b0a122a3c6  lab201/03-lab201-part2-immediate-source-start.png
+15fe4e9561faed88803a12289ddc09d2c4edbd1cf97ed53c42df5946d03ca4ce  lab201/04-lab201-ahi-twos-complement-source.png
+9d7adceafbf12ef71fca37aac5c001a1fa5bb650faa53f0312041be4d1958645  lab201/05-lab201-source-tail-controlled-s0c1-ltorg.png
+9cdc724248cfb7135521b318e13058f96c2b810adf1ca311222486c9e3d2fb9e  lab201/06-lab201-runtime-r2-r5-and-s0c1.png
+befba83a919d2310a692dd1f60ea1ce05d6c17a9b94063a4fdb3d449e46b4fb6  lab201/07-lab201-asmaclg-assembly-binder-rc0000.png
+06a10e6b7e0ea989a09cde62ddf3f2c7696e9a2ead6bd039aaddd7d0a3847ae9  lab201/08-lab201-source-object-storage-operands.png
+c3dcf3d7c381516d2fbd33314bce40d582361bef7c3982b5212b4948db67b21d  lab201/09-lab201-source-object-iilf-afi-lr.png
+f648a349015fb7c2bd17c46b6cc9ddcb13f5f9c00a23a5181893839a7157df90  lab201/10-lab201-source-object-ahi-literals-using-map.png
+c4e51a2fd0d4818e6dca09a703cccac04213f02835bbb28863def08daf9def6f  lab201/11-lab201-hlasm-no-statements-flagged-rc000.png
+f65d58db386f7d645b911b96e01258364a971ff1245ccb0875bdf5275c0c0453  lab201/12-lab201-binder-module-map-length-32.png
+9a7269f8b62467deda0a319e39748e39158c31394a7c2aae9db00502db044f17  lab201/13-lab201-binder-amode31-rmode-any.png
+e2b431b0a7445365407ce39e60998272f7607d7a407fe8356e5c0209f75bdbfc  lab201/14-lab201-binder-entry-lab201-rc0.png
