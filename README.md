@@ -37,3 +37,22 @@ Each completed lab or published lab milestone contains:
 - evidence index and integrity manifest
 - security/publication review
 - Git Bash installation and publication commands
+
+---
+
+## Portfolio navigation
+
+This repository is a specialist track inside the **IBM z/OS Mainframe Engineering Portfolio**.
+
+| Destination | Purpose |
+|---|---|
+| [Portfolio Portal](https://github.com/P-dot/P-dot) | Role paths, domain map and learning journey |
+| [Core z/OS Engineering Lab](https://github.com/P-dot/zos-adcd-hercules-engineering-lab) | Platform architecture, operations and engineering control |
+| [Application Integration](https://github.com/P-dot/mainframe-cobol-db2-cics-devops-lab) | Cross-domain application and data workflows |
+| [JCL / JES2](https://github.com/P-dot/JCL_LABS) | Batch execution mechanics |
+| [Diagnostics & Recovery](https://github.com/P-dot/zos-problem-determination-diagnostics) | Evidence-driven problem determination |
+| [RACF / SAF Security](https://github.com/P-dot/mainframe-racf-security-evidence) | Identity, authorization and trust boundaries |
+
+**Navigation contract:** `Profile → Portal → Domain owner → exact lab/evidence → related integration track → Portfolio`.
+
+[← Return to the portfolio portal](https://github.com/P-dot/P-dot)
